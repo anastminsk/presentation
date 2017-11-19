@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="description" content="How browser works">
+    	<meta name="author" content="Nastassia Tanyhina">
+
+		<title>How browser works</title>
+		
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/moon.css">
+		<link rel="stylesheet" href="css/font-awesome.min.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+				<section>
+					<h1>How browser works</h1>
+					<img width="740" height="300" data-src="img/browsericons.png" style="border: none; background: none">
+					<p>Created by Nastassia Tanyhina</p>
+				</section>
+
+				<section>
+					<h2>The browser's main components</h2>
+					<img width="800" height="500" data-src="img/browser-components.png" style="border: none; background: none">
+				</section>
+
+				<section>
+					<h2>Page rendering cycle</h2>
+					<ul>
+					  <li class="fragment">Parse HTML</li>
+					  <li class="fragment">Build the DOM tree</li>
+					  <li class="fragment">Parse CSS and calculate CSS property values</li>
+					  <li class="fragment">Build the CSSOM tree</li>
+					  <li class="fragment">Build the render tree</li>
+					  <li class="fragment">Calculate layout of the render tree</li>
+					  <li class="fragment">Painting the render tree</li>
+					  <li class="fragment">Display the final screen image onto the screen</li>
+					</ul>
+	 			</section>
+
+	 			<section>
+					<h2>Main flow example</h2>
+					<img width="1200" height="500" data-src="img/main-flow.png" style="border: none; background: none">
+				</section>
+
+				<section>
+					<h3>Parsing a document</h3>
+					<ul>
+					  <li>lexical analysis</li>
+					  <li>syntax analysis</li>
+					</ul>
+					<img width="150" height="500" data-src="img/parsing-document.png" style="border: none; background: none; float: right">
+					<img width="640" height="240" data-src="img/tokenizer.png" style="border: none; background: none; float: left; margin-top: 50px">
+				</section>
+
+				<section>
+					<h3>HTML parsing flow</h3>
+					<ul>
+					  <li>tokenization</li>
+					  <li>tree construction</li>
+					</ul>
+					<img width="410" height="500" data-src="img/html-parsing-flow.png" style="border: none; background: none; float: right">
+				</section>
+
+				<section>
+					<ul>
+					  <li>HTML markup is transformed into a Document Object Model (DOM)</li>
+					  <li>CSS markup is transformed into a CSS Object Model (CSSOM)</li>
+					  <li>DOM and CSSOM are independent data structures</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>DOM</h3>
+					<pre style="width: 500px; float: left"><code>&lt;html>
+  &lt;body>
+    <p>
+      Hello World
+    </p>
+    <div>&lt;img src="example.png"/></div>
+  &lt;/body>
+&lt;/html></code></pre>
+				<img width="400" height="220" data-src="img/domtree.png" style="border: none; background: none; float: right"> 
+				</section>
+
+				<section>
+					<img width="1123" height="622" data-src="img/full-process-dom.png" style="border: none; background: #fff">
+				</section>
+
+				<section>
+					<h3>CSSOM</h3>
+					<img width="700" height="400" data-src="img/cssom-tree.png" style="border: none; background: #fff">
+				</section>
+
+				<section>
+					<ul>
+					  <li>The DOM and CSSOM trees are combined to form the render tree</li>
+					  <li>Render tree contains only the nodes required to render the page</li>
+					  <li>Layout computes the exact position and size of each object</li>
+					  <li>The last step is paint, which takes in the final render tree and renders the pixels to the screen</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Render tree construction</h3>
+					<img width="1150" height="540" data-src="img/render-tree-construction.png" style="border: none; background: #fff">
+				</section>
+
+				<section>
+					<h3>Steps to construct the render tree</h3>
+					<ol>
+					  <li>Starting at the root of the DOM tree, traverse each visible node</li>
+					  <ul>
+					  	<li>some nodes are not visible (for example, script tags, meta tags, and so on), and are omitted</li>
+					  	<li>some nodes are hidden via CSS and are also omitted ("display: none" property)</li>
+					  </ul>	
+					  <li>For each visible node, find the appropriate matching CSSOM rules and apply them</li>
+					  <li>Emit visible nodes with content and their computed styles</li>
+					</ol>
+				</section>
+
+				<section>
+					<img width="900" height="500" data-src="img/render-tree-relation-domtree.png" style="border: none; background: #fff">
+					<p>The render tree and the corresponding DOM tree</p>
+				</section>
+
+				<section>
+					<h3>Layout</h3>
+					<p>Recursive process</p>
+					<ul>
+					  <li>Traverse the render tree</li>
+					  <li>Nodes position and size</li>
+					  <li>Layout its children</li>	
+					</ul>	
+				</section>
+
+				<section>
+					<p><small>The output of the layout process is a "box model", which precisely captures the exact position and size of each element within the viewport: all of the relative measurements are converted to absolute pixels on the screen</small></p>
+					<img width="900" height="400" data-src="img/layout.png" style="border: none; background: #fff">
+				</section>
+
+				<section>
+					<h3>Painting</h3>
+					<p><small>Converts each node in the render tree to actual pixels on the screen</small></p>
+					 <video controls="" preload="" autobuffer="" width="640" height="510">
+                    <source src="img/geckoreflow-mozillaorg.mp4">
+                </video>
+				</section>
+
+				<section>
+					<h2>Recap</h2>
+					<ul>
+					  <li class="fragment">Parsing HTML <i class="fa fa-long-arrow-right" aria-hidden="true"></i> DOM tree</li>
+					  <li class="fragment">Parsing CSS <i class="fa fa-long-arrow-right" aria-hidden="true"></i> CSSOM tree</li>
+					  <li class="fragment">DOM tree <i class="fa fa-plus" aria-hidden="true"></i> CSSOM tree <i class="fa fa-long-arrow-right" aria-hidden="true"></i> Render tree</li>
+					  <li class="fragment">Run layout on the render tree to compute geometry of each node</li>
+					  <li class="fragment">Paint the individual nodes to the screen</li>
+					</ul>
+	 			</section>
+
+				<section>
+					<h3>Resources</h3>
+					<ul>
+					  <li><a href="http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/">
+             			How Browsers Work</a></li>
+					  <li><a href="http://vimeo.com/44182484">
+             			How Browsers Work [video]</a></li>
+					  <li><a href="http://noobcode.blogspot.com.by/2016/01/notes-ryan-seddon-so-how-does-browser.html">So how does the browser actually render a website</a></li>	
+					</ul>					
+				</section>
+
+				<section>
+                  <h2>Questions?</h2>
+                  <hr/>
+                  <h2>Thanks!</h2>
+            	</section>
+
+
+
+
+
+
+
+
+				
+
+
+
+
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>
