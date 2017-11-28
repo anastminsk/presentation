@@ -42,6 +42,19 @@
 				</section>
 
 				<section>
+					<h2>Client-server model</h2>
+					<img width="800" height="500" data-src="img/client-server-model.gif" style="border: none; background: none">
+				</section>
+
+				<section>
+					<ul>
+					  <li class="fragment">Contact to DNS Server <small>A DNS server stores the IP addresses of the server associated with the corresponding domain names. The DNS server takes the domain name from the browser and returns the corresponding IP address to the browser.</small></li>
+					  <li class="fragment">Contact to Server <small>After getting the IP address of the server for the requested webpage, browser sends a request to that server for the desired files. The methods of communication between web client and server are defined by HTTP (Hyper Text Transfer Protocol).</small></li>
+					  <li class="fragment">Rendering <small>The entire process followed by a browser from fetching the webpage to displaying it on the screen.</small></li>
+					</ul>
+				</section>
+
+				<section>
 					<h2>Page rendering cycle</h2>
 					<ul>
 					  <li class="fragment">Parse HTML</li>
@@ -61,6 +74,11 @@
 				</section>
 
 				<section>
+					<h2>Main flow example</h2>
+					<img width="900" height="500" data-src="img/how-browser-engines-work.jpg" style="border: none; background: none">
+				</section>
+
+				<section>
 					<h3>Parsing a document</h3>
 					<ul>
 					  <li>lexical analysis</li>
@@ -71,20 +89,12 @@
 				</section>
 
 				<section>
-					<h3>HTML parsing flow</h3>
+					<h3>HTML parsing</h3>
 					<ul>
-					  <li>tokenization</li>
-					  <li>tree construction</li>
+					  <li>tokenization<br><small>Tokenization is the lexical analysis,<br> parsing the input into tokens<br> (start tags, end tags,<br> attribute names and attribute values)</small></li>
+					  <li>tree construction<br><small>The DOM tree with the Document<br> in its root will be modified<br> and elements will be added to it</small></li>
 					</ul>
 					<img width="410" height="500" data-src="img/html-parsing-flow.png" style="border: none; background: none; float: right">
-				</section>
-
-				<section>
-					<ul>
-					  <li>HTML markup is transformed into a Document Object Model (DOM)</li>
-					  <li>CSS markup is transformed into a CSS Object Model (CSSOM)</li>
-					  <li>DOM and CSSOM are independent data structures</li>
-					</ul>
 				</section>
 
 				<section>
@@ -101,26 +111,35 @@
 				</section>
 
 				<section>
-					<img width="1123" height="622" data-src="img/full-process-dom.png" style="border: none; background: #fff">
+					<img width="750" height="300" data-src="img/dom-construction-code.png" style="border: none; background: none">
+					<img width="750" height="300" data-src="img/dom-tree.png" style="border: none; background: none">
+				</section>
+
+				<section>
+					<h3>CSS parsing</h3>
+					<p><small>Each CSS file is parsed into a StyleSheet object. Each object contains CSS rules. The CSS rule objects contain selector and declaration objects and other objects corresponding to CSS grammar.</small></p>
+					<img width="600" height="450" data-src="img/css-parsing.png" style="border: none; background: none">
 				</section>
 
 				<section>
 					<h3>CSSOM</h3>
-					<img width="700" height="400" data-src="img/cssom-tree.png" style="border: none; background: #fff">
+					<p><small>When computing the final set of styles the browser starts with the most general rule applicable to the node and then recursively applies more specific rules:<br> the rules "cascade down"</small></p>
+					<img width="250" height="150" data-src="img/css-rules.png" style="border: none; background: none; float: left">
+					<img width="700" height="400" data-src="img/cssom-tree.png" style="border: none; background: none; float: right">
 				</section>
 
 				<section>
 					<ul>
-					  <li>The DOM and CSSOM trees are combined to form the render tree</li>
-					  <li>Render tree contains only the nodes required to render the page</li>
-					  <li>Layout computes the exact position and size of each object</li>
-					  <li>The last step is paint, which takes in the final render tree and renders the pixels to the screen</li>
+					  <li>HTML markup is transformed into a Document Object Model (DOM)</li>
+					  <li>CSS markup is transformed into a CSS Object Model (CSSOM)</li>
+					  <li>DOM and CSSOM are independent data structures: DOM describes the content, CSSOM - the styles that will be applied to it</li>
 					</ul>
 				</section>
 
 				<section>
 					<h3>Render tree construction</h3>
-					<img width="1150" height="540" data-src="img/render-tree-construction.png" style="border: none; background: #fff">
+					<p><small>The DOM and CSSOM trees are combined to form the render tree</small></p>
+					<img width="1100" height="500" data-src="img/render-tree-construction.png" style="border: none; background: #fff; margin-top: -10px">
 				</section>
 
 				<section>
@@ -137,21 +156,12 @@
 				</section>
 
 				<section>
-					<img width="900" height="500" data-src="img/render-tree-relation-domtree.png" style="border: none; background: #fff">
 					<p>The render tree and the corresponding DOM tree</p>
+					<img width="900" height="500" data-src="img/render-tree-relation-domtree.png" style="border: none; background: #fff">
 				</section>
 
 				<section>
 					<h3>Layout</h3>
-					<p>Recursive process</p>
-					<ul>
-					  <li>Traverse the render tree</li>
-					  <li>Nodes position and size</li>
-					  <li>Layout its children</li>	
-					</ul>	
-				</section>
-
-				<section>
 					<p><small>The output of the layout process is a "box model", which precisely captures the exact position and size of each element within the viewport: all of the relative measurements are converted to absolute pixels on the screen</small></p>
 					<img width="900" height="400" data-src="img/layout.png" style="border: none; background: #fff">
 				</section>
@@ -165,7 +175,12 @@
 				</section>
 
 				<section>
-					<h2>Recap</h2>
+					<img width="770" height="200" data-src="img/render-tree.png" style="border: none; background: none">
+					<img width="770" height="400" data-src="img/final-page.png" style="border: none; background: none">
+				</section>
+
+				<section>
+					<h2>Summary</h2>
 					<ul>
 					  <li class="fragment">Parsing HTML <i class="fa fa-long-arrow-right" aria-hidden="true"></i> DOM tree</li>
 					  <li class="fragment">Parsing CSS <i class="fa fa-long-arrow-right" aria-hidden="true"></i> CSSOM tree</li>
@@ -191,18 +206,6 @@
                   <hr/>
                   <h2>Thanks!</h2>
             	</section>
-
-
-
-
-
-
-
-
-				
-
-
-
 
 			</div>
 		</div>
